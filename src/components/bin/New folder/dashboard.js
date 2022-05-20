@@ -36,16 +36,38 @@ const Gallery=()=>{
     const [images, setImages]=useState([])
     const {isLoading, setIsLoading}=useState(true);
     const [term,setTerm]=useState('');
+    // useEffect(()=>{
+    //     fetch(`https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&image_type=photo&pretty=true`)
+    //     .then(res=>res.json())
+    //     .then(data=>{
+    //         console.log(data);
+    //         setImages(data.hits);
+    //         setIsLoading(false);
+    //     })
+    //     .catch(err=>console.log(err))
+    // }, [setIsLoading, term])
+
     useEffect(()=>{
-        fetch(`https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&image_type=photo&pretty=true`)
-        .then(res=>res.json())
-        .then(data=>{
+        getImages();
+    },[])
+
+    const getImages=async()=>{
+
+        const check=localStorage.getItem('images')
+
+        if(check){
+            setImages(JSON.parse(check))
+        }else{
+            const api=await fetch(`https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&image_type=photo&pretty=true`)
+            const data=await api.json();
             console.log(data);
             setImages(data.hits);
             setIsLoading(false);
-        })
-        .catch(err=>console.log(err))
-    }, [setIsLoading, term])
+            localStorage.setItem('images',JSON.stringify(data.hits));
+            setImages(data.hits)
+        }
+
+    }
 
 
     return(
