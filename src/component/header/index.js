@@ -18,9 +18,11 @@ const Header=({text,setText,setAdd,add})=>{
     
     return(
         <div>
-            <form>
-                <input onChange={changeText} value={text} />
-                <button onClick={addHandler} type="submit">add</button>
+            <form className="w-10/12 mx-auto flex justify-center m-4">
+                <div className="border-2 border-teal-900 rounded">
+                    <input onChange={changeText} value={text} className="outline-none px-4" />
+                    <button onClick={addHandler} type="submit" className="uppercase bg-slate-700 py-2 px-4 rounded text-lime-400 font-normal opacity-95 hover:opacity-100">add</button>
+                </div>
             </form>
         </div>
     )

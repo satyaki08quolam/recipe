@@ -13,25 +13,19 @@ const validationSchema=Yup.object({
     name:Yup.string().required("Required!")
 })
 
-const NameForm=({setFeed1,feed1,setPage1,page1})=>{
+const NameForm=({text,setInfo,info,setText})=>{
     const x=useFormik({
         initialValues,
         validationSchema,
-        onSubmit:(values)=>{
-            console.log('form data==>',values)
-            setPage1((prevValue)=>{
-                return [...prevValue,values]
-            })
-        setPage1('')
+        onSubmit:(values)=>
+            {
+                console.log('form data==>',values)
+                setInfo([
+                        ...info,{text:values.name,check:false,id:Math.random()*1000},
+                ])
+                console.log(info)
+                values.name=''
     }})
-    // const addHandler=(e)=>{
-    //     // to stop refresh
-    //     e.preventDefault()
-    //     setPage1((prevValue)=>{
-    //         return [...prevValue,feed1]
-    //     })
-    //     setFeed1('')
-    // }
 
     return(
         <div>
